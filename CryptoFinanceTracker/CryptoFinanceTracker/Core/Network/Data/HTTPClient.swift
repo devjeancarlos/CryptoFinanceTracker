@@ -16,7 +16,7 @@ public actor HTTPClient: HTTPClientProtocol {
         self.session = session
         self.decoder = decoder
         
-        //Standard strategy to decode API fields like curret_price to currentPice
+        //Standard strategy to decode API fields like current_price to currentPice
         self.decoder.keyDecodingStrategy = .convertFromSnakeCase
     }
     
