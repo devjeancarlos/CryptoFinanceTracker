@@ -32,7 +32,10 @@ extension Endpoint {
             throw NetworkError.invalidURL
         }
         
-        urlComponents.path = path
+        let normalizedBasePath = urlComponents.path.hasSuffix("/") ? String(urlComponents.path.dropLast()) : urlComponents.path
+        let normalizedEndpointPath = path.hasPrefix("/") ? path : "/\(path)"
+        
+        urlComponents.path = normalizedBasePath + normalizedEndpointPath
         urlComponents.queryItems = queryItems
         
         guard let url = urlComponents.url else {
