@@ -16,13 +16,15 @@ nonisolated public struct Coin: Identifiable, Sendable, Equatable {
     public let currentPrice: Double
     public let priceChangePercentage24h: Double
     public let imageURL: URL?
+    public let isFavorite: Bool
     
-    public init(id: String, symbol: String, name: String, currentPrice: Double, priceChangePercentage24h: Double, imageURL: URL?) {
+    public init(id: String, symbol: String, name: String, currentPrice: Double, priceChangePercentage24h: Double, imageURL: URL?, isFavorite: Bool = false) {
         self.id = id
         self.symbol = symbol
         self.name = name
         self.currentPrice = currentPrice
         self.priceChangePercentage24h = priceChangePercentage24h
         self.imageURL = imageURL
+        self.isFavorite = isFavorite
     }
 }
