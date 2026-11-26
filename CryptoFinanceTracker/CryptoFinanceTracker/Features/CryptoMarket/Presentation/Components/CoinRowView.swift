@@ -10,6 +10,7 @@ import SwiftUI
 ///Pure leaf component: receives a value type (coin) and doesn't know the ViewModel
 struct CoinRowView: View {
     let coin: Coin
+    let onToggleFavorite: () -> Void
     
     var body: some View {
         HStack(spacing: 15) {
@@ -24,7 +25,7 @@ struct CoinRowView: View {
                         .scaledToFit()
                         .frame(width: 36, height: 36)
                         .clipShape(Circle())
-                case .failure(let error):
+                case .failure:
                     Image(systemName: "bitcoinsign.circe.fill")
                         .resizable()
                         .scaledToFit()
@@ -57,6 +58,15 @@ struct CoinRowView: View {
                 
                 priceChangeBadge
             }
+            
+            Button(action: onToggleFavorite) {
+                Image(systemName: coin.isFavorite ? "star.fill" : "star")
+                    .font(.title3)
+                    .foregroundStyle(coin.isFavorite ? .yellow : .secondary)
+                    .contentTransition(.symbolEffect(.replace))
+            }
+            .buttonStyle(.plain)
+            .padding(.leading, 4)
         }
         .padding(.vertical, 4)
     }

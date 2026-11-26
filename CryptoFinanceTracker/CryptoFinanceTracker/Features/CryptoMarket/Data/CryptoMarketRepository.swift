@@ -45,4 +45,10 @@ public struct CryptoMarketRepository: CryptoMarketRepositoryProtocol {
             throw error
         }
     }
+    
+    //If caller of this function ignores the return value, don't show a warning
+    @discardableResult
+    public func toogleFavorite(coinID: String) async throws -> Bool {
+        return try await localDataSource.toggleFavorite(coinID: coinID)
+    }
 }

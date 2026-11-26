@@ -38,7 +38,8 @@ final class AppDIContainer {
     func makeCryptoMarketViewModel() -> CryptoMarketViewModel {
         let repository = CryptoMarketRepository(httpClient: httpClient, localDataSource: cryptoLocalDataSource)
         let fetchUseCase = FetchCrytoMarketsUseCase(repository: repository)
+        let toggleFavoriteUseCase = ToggleFavoriteCoinUseCase(repository: repository)
         
-        return CryptoMarketViewModel(fetchUseCase: fetchUseCase)
+        return CryptoMarketViewModel(fetchUseCase: fetchUseCase, toggleFavoriteUseCase: toggleFavoriteUseCase)
     }
 }

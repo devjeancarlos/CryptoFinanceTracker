@@ -11,4 +11,5 @@ import Foundation
 ///THe UI and Use Case will only know this protocol, never the actual implementation
 public protocol CryptoMarketRepositoryProtocol: Sendable {
     func fetchMarkets(currency: String, perPage: Int) async throws -> [Coin]
+    func toogleFavorite(coinID: String) async throws -> Bool
 }

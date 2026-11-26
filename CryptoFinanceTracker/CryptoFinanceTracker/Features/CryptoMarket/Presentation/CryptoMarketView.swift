@@ -21,13 +21,7 @@ struct CryptoMarketView: View {
                     ProgressView("Fetching real-time prices...")
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                 case .succes(let coins):
-                    List(coins) { coin in
-                        CoinRowView(coin: coin)
-                    }
-                    .listStyle(.plain)
-                    .refreshable {
-                        viewModel.loadMarkets()
-                    }
+                    marketListContent
                 case .error(let message):
                     ContentUnavailableView {
                         Label("Connection error", systemImage: "wifi.exclamationmark")
@@ -50,6 +44,27 @@ struct CryptoMarketView: View {
             .onDisappear {
                 //preventive cancellation when leaving the screen to free up resources
                 viewModel.cancelTask()
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private var marketListContent: some View {
+        let coins = viewModel.displayCoins
+        
+        if coins.isEmpty && viewModel.showOnlyFavorites {
+            ContentUnavailableView("Without favorites, there are no coins to show.",
+            systemImage: "star.slash",
+            description: Text("Taph the start on any cryptoconcurreny to save it here and view it offline"))
+        } else {
+            List(coins) { coin in
+                CoinRowView(coin: coin) {
+                    viewModel.toggleFavorite(for: coin.id)
+                }
+            }
+            .listStyle(.plain)
+            .refreshable {
+                viewModel.loadMarkets()
             }
         }
     }
